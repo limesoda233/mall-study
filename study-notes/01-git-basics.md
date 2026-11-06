@@ -1,14 +1,37 @@
-# Git 基础练习
+# Git 基础练习笔记
 
-## 已完成
-- 启动 mall-admin。
-- 打开 Swagger 接口文档。
-- 创建 Git 练习分支。
+这次练习中，我在 `mall` 项目里创建了 `practice/git-basics` 分支，写了一份笔记，提交后推送到 GitHub。
 
-## 我的理解
-- 工作区：我正在编辑的文件。
-- 暂存区：准备加入下一次提交的内容。
-- 本地仓库：已经提交的版本历史。
-- 远程仓库：GitHub 上保存的仓库。
-- git add 保存的是执行那一刻的文件内容，后续修改需要再次 add。
-- git commit -m "" docs: 文档改动 fix: 代码修改
+## 1. 从修改到推送
+
+| 命令 | 作用 |
+|---|---|
+| `git status` | 查看当前分支，以及哪些文件已修改、已暂存或尚未跟踪 |
+| `git switch -c practice/git-basics` | 从当前位置创建并切换到练习分支 |
+| `git diff` | 查看已跟踪文件在工作区和暂存区之间的差异 |
+| `git add study-notes/01-git-basics.md` | 把笔记此刻的内容放入暂存区 |
+| `git diff --staged` | 检查下一次提交将包含哪些修改 |
+| `git commit -m "docs: 添加 Git 学习笔记"` | 把暂存区的内容保存为一次本地提交 |
+| `git show --stat` | 查看最新提交的说明、修改的文件和增删行数 |
+| `git push -u origin practice/git-basics` | 推送到远程同名分支，并建立跟踪关系 |
+
+## 2. 提交说明怎么写
+
+常用格式是 `类型(范围): 具体改动`，范围可以省略。
+
+- `docs: 添加 Git 学习笔记`（文档）
+- `fix(admin): 修复 Swagger 文档访问问题`（修复）
+- `feat(product): 支持按价格区间筛选商品`（新功能）
+- 其他常见类型有 `refactor`（重构）、`test`（测试）、`perf`（性能优化）、`chore`（维护）。
+
+## 3. HEAD 和本地分支
+
+平时在分支上开发时，关系是 `HEAD → 当前本地分支 → 一条提交`。`git show` 默认展示 `HEAD` 指向的提交。
+
+通常只有一个正在编辑的 `mall` 目录，多个分支共用 `.git` 里的提交历史。执行 `git switch study/setup` 会切回配置分支，工作目录随之更新。只在练习分支提交过的笔记会消失，切回来又会出现。未提交的改动可能跟着切换，所以切换前先看 `git status`。
+
+## 4. origin 和远程分支
+
+`origin` 是远程仓库的简称，`practice/git-basics` 是分支名。第一次推送时，Git 可以自动在远程创建同名分支。`-u` 建立跟踪关系，以后在这个分支上执行 `git push` 即可继续推送。
+
+用 `git branch -vv` 查看跟踪关系。如果本地分支旁显示 `[origin/practice/git-basics]`，说明它跟踪的是 `origin` 仓库里的练习分支。
